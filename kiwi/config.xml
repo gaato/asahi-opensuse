@@ -12,8 +12,8 @@
         <bootsplash-theme>bgrt</bootsplash-theme>
         <bootloader-theme>openSUSE</bootloader-theme>
         <locale>en_US</locale>
-        <keytable>us</keytable>
-	<timezone>UTC</timezone>
+        <keytable>jp-dvorak</keytable>
+	<timezone>Asia/Tokyo</timezone>
         <rpm-check-signatures>true</rpm-check-signatures>
         <type image="oem" filesystem="btrfs" fsmountoptions="x-systemd.growfs,compress=zstd:1" kernelcmdline="splash=silent quiet security=selinux" firmware="uefi" bootpartition="false" efipartsize="1536" target_blocksize="4096" btrfs_root_is_snapshot="true" btrfs_set_default_volume="true" rootfs_label="tumbleweed">
             <bootloader name="grub2" console="gfxterm" timeout="3"/>
@@ -32,9 +32,7 @@
 	    </oemconfig>
         </type>
     </preferences>
-    <users>
-        <user pwdformat="plain" password="root" home="/root" name="root" groups="root"/>
-    </users>
+    <include from="this://./users.local.xml"/>
     <profiles>
         <profile name="Tumbleweed" description="Tumbleweed base"/>
         <profile name="Tumbleweed-KDE" description="Tumbleweed with KDE desktop">
@@ -43,8 +41,8 @@
     </profiles>
     <include from="this://./repos.xml"/>
     <!-- Asahi repo -->
-    <repository type="rpm-md" alias="asahi" priority="1" repository_gpgcheck="false" package_gpgcheck="false" imageinclude="false">
-	<source path="http://download.opensuse.org/repositories/home:/mrkcee/openSUSE_Factory_ARM/"/>
+    <repository type="rpm-md" alias="asahi" priority="1" repository_gpgcheck="true" package_gpgcheck="true" imageinclude="true">
+	<source path="https://download.opensuse.org/repositories/home:/gaato:/asahi/openSUSE_Factory_ARM/"/>
     </repository>
     <packages type="bootstrap" patternType="plusRecommended">
     <package name="which"/>
@@ -72,8 +70,8 @@
         <package name="patterns-base-selinux"/>
     </packages>
     <packages type="image" patternType="onlyRequired">
-        <package name="systemd-boot"/>
-		<package name="sdbootutil"/>
+        <package name="sudo-policy-wheel-auth-self"/>
+        <package name="grub2-snapper-plugin"/>
         <package name="branding-openSUSE"/>
         <package name="squashfs"/>
         <package name="cron"/>
@@ -99,8 +97,7 @@
 	<package name="plymouth-dracut"/>
 	<package name="plymouth-theme-bgrt"/>
         <package name="plymouth-theme-spinner"/>
-	<package name="systemd-firstboot"/>
-	<package name="systemd-network"/>
+	<package name="systemd-networkd"/>
 	<package name="systemd-default-settings-branding-openSUSE"/>
 	<package name="systemd-presets-branding-openSUSE"/>
 	<package name="fastfetch"/>
@@ -115,7 +112,7 @@
     <packages type="image" patternType="onlyRequired"> 
         <package name="kernel-asahi"/>
         <package name="dtb-apple"/>
-        <package name="uboot-asahi"/>
+        <package name="u-boot-asahi"/>
         <package name="asahi-bless"/>
 	<package name="asahi-btsync"/>
 	<package name="asahi-nvram"/>
@@ -125,12 +122,11 @@
 	<package name="asahi-fwupdate"/>
         <package name="update-m1n1"/>
 	<package name="speakersafetyd"/>
-	<package name="system-user-speakersafetyd"/>
         <package name="Mesa"/>
         <package name="Mesa-dri"/>
-        <package name="Mesa-dri-asahi"/>
 		<package name="Mesa-libRusticlOpenCL"/>
-		<package name="Mesa-lib-vulkan-device-select"/>
+		<package name="Mesa-vulkan-device-select"/>
+        <package name="libvulkan_asahi"/>
 	<package name="lv2-lsp-plugins"/>
 	<package name="bankstown-lv2"/>
 	<package name="triforce-lv2"/>
@@ -159,7 +155,6 @@
 	<package name="dolphin"/>
 	<package name="filelight"/>
 	<package name="partitionmanager"/>
-	<package name="kipi-plugins"/>
 	<package name="okular"/>
 	<package name="spectacle"/>
 	<package name="gwenview"/>

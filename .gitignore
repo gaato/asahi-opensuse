@@ -2,3 +2,12 @@
 scripts/build
 *.DS_Store*
 specs/kernel.spec
+kiwi/outdir-*/
+kiwi/Tumbleweed-KDE.zip
+kiwi/installer_data-*.json
+kiwi/users.local.xml
+kiwi/installer-output/
+__pycache__/
+.keys/
+.vm-prepared
+*.log

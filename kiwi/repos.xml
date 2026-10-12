@@ -1,20 +1,20 @@
 <image>
 	<!-- Tumbleweed repositories -->
 	<repository type="rpm-md" alias="repo-oss" profiles="Tumbleweed" imageinclude="true">
-		<source path="http://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/"/>
+		<source path="https://download.opensuse.org/ports/aarch64/tumbleweed/repo/oss/"/>
 	</repository>
 	<repository type="rpm-md" alias="repo-debug" profiles="Tumbleweed">
-		<source path="http://download.opensuse.org/ports/aarch64/debug/tumbleweed/repo/oss/"/>
+		<source path="https://download.opensuse.org/ports/aarch64/debug/tumbleweed/repo/oss/"/>
 	</repository>
 	<repository type="rpm-md" alias="repo-update" profiles="Tumbleweed" imageinclude="true">
-		<source path="http://download.opensuse.org/ports/aarch64/update/tumbleweed/"/>
+		<source path="https://download.opensuse.org/ports/aarch64/update/tumbleweed/"/>
 	</repository>
 	<repository type="rpm-md" alias="repo-src-oss" profiles="Tumbleweed">
-		<source path="http://download.opensuse.org/ports/aarch64/source/tumbleweed/repo/oss/"/>
+		<source path="https://download.opensuse.org/ports/aarch64/source/tumbleweed/repo/oss/"/>
 	</repository>
   <!-- openh264 repository -->
 	<repository type="rpm-md" alias="openh264" profiles="Tumbleweed" imageinclude="true">
-		<source path="http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/"/>
+		<source path="https://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/"/>
 	</repository>
 
 	<!-- Leap repositories -->

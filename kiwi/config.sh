@@ -28,11 +28,39 @@ passwd -l root
 systemctl enable NetworkManager.service
 systemctl enable chronyd.service
 systemctl enable sddm.service
-systemctl enable systemd-firstboot.service
+systemctl enable speakersafetyd.service
 
 mkdir -p /var/log/journal
 
 systemctl set-default graphical.target
+
+# Use the same JIS Dvorak layout for the greeter and new Plasma sessions.
+mkdir -p /etc/X11/xorg.conf.d /etc/skel/.config /var/lib/sddm/.config
+cat > /etc/X11/xorg.conf.d/00-keyboard.conf <<EOF
+Section "InputClass"
+    Identifier "system-keyboard"
+    MatchIsKeyboard "on"
+    Option "XkbLayout" "jp"
+    Option "XkbVariant" "dvorak"
+    Option "XkbModel" "apple"
+EndSection
+EOF
+cat > /etc/skel/.config/kxkbrc <<EOF
+[Layout]
+Use=true
+LayoutList=jp
+VariantList=dvorak
+Model=apple
+EOF
+cp /etc/skel/.config/kxkbrc /var/lib/sddm/.config/kxkbrc
+chown -R sddm:sddm /var/lib/sddm/.config
+# KIWI may already have created the personalized user before config.sh runs.
+for user_home in /home/*; do
+    [ -d "$user_home" ] || continue
+    mkdir -p "$user_home/.config"
+    cp /etc/skel/.config/kxkbrc "$user_home/.config/kxkbrc"
+    chown --reference="$user_home" "$user_home/.config" "$user_home/.config/kxkbrc"
+done
 
 #======================================
 # Enable yast2-firstboot
@@ -46,10 +74,7 @@ mkdir -p /boot/efi/m1n1
 update-m1n1 /boot/efi/m1n1/boot.bin
 rm -rf /boot/.builder
 
-#======================================
-# Update GRUB2
-#--------------------------------------
-grub2-mkconfig -o /boot/grub2/grub.cfg
+# KIWI creates the final GRUB configuration after partitioning the image.
 
 #======================================
 # Default to Wayland

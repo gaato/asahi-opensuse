@@ -30,6 +30,57 @@ In a nutshell, the flow of the building process is:
 
 Good luck :D
 
+## This fork: M1 MacBook Air build
+
+This fork uses [home:gaato:asahi](https://build.opensuse.org/project/show/home:gaato:asahi)
+for Asahi packages and keeps `/boot` inside the Btrfs root filesystem so kernel,
+initrd, and modules stay together during Snapper rollback. The image uses Japanese
+Dvorak on an Apple keyboard, the Asia/Tokyo time zone, and an English UI.
+
+Build in an **aarch64 openSUSE Tumbleweed VM**. Python 3.11 or newer is required.
+The personalized image contains a login password hash; do not publish it or its logs.
+
+1. Clone this fork and create `kiwi/users.local.xml` with
+   `python3 scripts/configure-user.py YOUR_USER`. The helper prompts locally and
+   stores only a hash in a file with mode 0600; Git ignores it. Alternatively, with
+   the owner's consent, root can reuse an existing local account's hash with
+   `python3 scripts/configure-user.py gaato --from-local-user`.
+2. In the dedicated build VM, run `sudo bash scripts/prepare-vm.sh`. This installs
+   the build tools and fetches the OBS signing key. The preparation helper is
+   specific to the owner's `gaato` account if no private user file exists yet.
+3. Wait until the required packages in `home:gaato:asahi/openSUSE_Factory_ARM`
+   are built and published, including `kernel-asahi`, `dtb-apple`, `m1n1`, and
+   `u-boot-asahi`. Do not mix a partial publication with a different kernel/DTB repo.
+4. Run `sh kiwi/kiwi-tumbleweed-kde.sh`. Each build uses a fresh output directory;
+   an existing target is never erased. An explicit target and signing-key file can
+   be supplied as its first and second arguments.
+5. Package the resulting raw image with
+   `sh kiwi/make-installer.sh PATH_TO_RAW PRIVATE_OUTPUT_DIRECTORY`.
+   The packager checks the sector size, two-partition layout, filesystem types,
+   boot artifacts, and ZIP integrity. It also writes a SHA-256 checksum.
+
+The output layout is:
+
+```text
+PRIVATE_OUTPUT_DIRECTORY/
+  installer_data.json
+  SHA256SUMS
+  os/Tumbleweed-KDE.zip
+```
+
+Use the current official Asahi installer release. In its extracted working
+directory, use the generated `installer_data.json` and set `REPO_BASE` to the
+absolute private output directory before starting `install.sh`. The manifest's
+relative package name makes the installer read the ZIP locally, without a web
+server. Preserve the installer's boot files and support code. Current installer
+releases also set the APFS bootability flag required by macOS 27.
+
+Packaging validation can be run with `python3 tests/test_packaging.py -v` on Linux.
+The integration test uses temporary regular files containing FAT and Btrfs
+filesystems, not block devices; its dummy EFI binaries test packaging, not booting.
+Actual Apple Silicon boot, graphics, audio, firmware extraction, and keyboard
+behavior still require verification on the target Mac.
+
 ## Big thanks to the following:
 - ivabus - for the initial configs
 - Fedora Asahi SIG Team - basis of some specs
