@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euxo pipefail
+umask 022
 
 test -f /.kconfig && . /.kconfig
 test -f /.profile && . /.profile
@@ -79,7 +80,8 @@ rm -rf /boot/.builder
 #======================================
 # Default to Wayland
 #--------------------------------------
-cat > /usr/lib/sddm/sddm.conf.d/10-wayland-default.conf <<EOF
+mkdir -p /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/10-wayland-default.conf <<EOF
 [General]
 DisplayServer=wayland
 EOF

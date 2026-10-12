@@ -1,10 +1,10 @@
 #!/bin/sh
 
 set -eu
-umask 077
+# KIWI and config.sh must create ordinary system files with normal permissions.
+umask 022
 
 description_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-target_dir=${1:-"$description_dir/outdir-Tumbleweed-KDE-$(date +%Y%m%d-%H%M%S)"}
 signing_key=${2:-"$description_dir/../.keys/asahi.asc"}
 
 if [ "$(uname -s)" != Linux ] || [ "$(uname -m)" != aarch64 ]; then
@@ -12,13 +12,25 @@ if [ "$(uname -s)" != Linux ] || [ "$(uname -m)" != aarch64 ]; then
     exit 1
 fi
 
-if [ -e "$target_dir" ]; then
-    echo "Target already exists: $target_dir. Choose a new directory." >&2
+if [ ! -f "$description_dir/users.local.xml" ]; then
+    echo 'Create the private login configuration with scripts/configure-user.py first.' >&2
     exit 1
 fi
 
-if [ ! -f "$description_dir/users.local.xml" ]; then
-    echo 'Create the private login configuration with scripts/configure-user.py first.' >&2
+if [ -n "${1-}" ]; then
+    target_dir=$1
+    build_parent=$(dirname -- "$target_dir")
+else
+    build_parent="$description_dir/../builds"
+    [ -d "$build_parent" ] || mkdir -m 700 -- "$build_parent"
+    target_dir="$build_parent/outdir-Tumbleweed-KDE-$(date +%Y%m%d-%H%M%S)"
+fi
+if [ ! -d "$build_parent" ] || [ "$(stat -c %a -- "$build_parent")" != 700 ]; then
+    echo 'The target parent directory must already exist with mode 0700.' >&2
+    exit 1
+fi
+if [ -e "$target_dir" ]; then
+    echo "Target already exists: $target_dir. Choose a new directory." >&2
     exit 1
 fi
 

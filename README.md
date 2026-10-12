@@ -46,14 +46,16 @@ The personalized image contains a login password hash; do not publish it or its 
    the owner's consent, root can reuse an existing local account's hash with
    `python3 scripts/configure-user.py gaato --from-local-user`.
 2. In the dedicated build VM, run `sudo bash scripts/prepare-vm.sh`. This installs
-   the build tools and fetches the OBS signing key. The preparation helper is
-   specific to the owner's `gaato` account if no private user file exists yet.
+   the build tools and fetches the OBS signing key. The private user include must
+   already exist; this step never copies a password hash automatically.
 3. Wait until the required packages in `home:gaato:asahi/openSUSE_Factory_ARM`
    are built and published, including `kernel-asahi`, `dtb-apple`, `m1n1`, and
    `u-boot-asahi`. Do not mix a partial publication with a different kernel/DTB repo.
-4. Run `sh kiwi/kiwi-tumbleweed-kde.sh`. Each build uses a fresh output directory;
-   an existing target is never erased. An explicit target and signing-key file can
-   be supplied as its first and second arguments.
+4. Run `sh kiwi/kiwi-tumbleweed-kde.sh`. Each build uses a fresh output directory
+   inside the private `builds/` directory; an existing target is never erased. An
+   explicit target and signing-key file can be supplied as its first and second
+   arguments. An explicit target's parent must already have mode 0700. The image
+   itself is built with umask 022 so its system files get normal permissions.
 5. Package the resulting raw image with
    `sh kiwi/make-installer.sh PATH_TO_RAW PRIVATE_OUTPUT_DIRECTORY`.
    The packager checks the sector size, two-partition layout, filesystem types,

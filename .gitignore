@@ -11,3 +11,4 @@ __pycache__/
 .keys/
 .vm-prepared
 *.log
+builds/

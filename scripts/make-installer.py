@@ -111,12 +111,15 @@ def main():
             raise ValueError("Unexpected FAT volume ID")
         esp = package_dir / "esp"
         run("7z", "x", "-y", f"-o{esp}", str(esp_image))
-        for path in (esp / "m1n1/boot.bin", esp / "EFI/BOOT/BOOTAA64.EFI"):
-            if not path.is_file() or not path.stat().st_size:
-                raise ValueError(f"Missing boot artifact: {path.relative_to(esp)}")
         for path in esp.rglob("*"):
             if path.is_symlink():
                 raise ValueError("Unexpected symlink in EFI partition")
+        # FAT is case-insensitive; 7z preserves KIWI's lowercase bootaa64.efi.
+        files = {str(path.relative_to(esp)).casefold(): path
+                 for path in esp.rglob("*") if path.is_file()}
+        for name in ("m1n1/boot.bin", "efi/boot/bootaa64.efi"):
+            if name not in files or not files[name].stat().st_size:
+                raise ValueError(f"Missing boot artifact: {name}")
         staged = work / "result"
         (staged / "os").mkdir(parents=True)
         archive = staged / "os" / PACKAGE

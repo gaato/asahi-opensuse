@@ -17,8 +17,9 @@ localectl --no-convert set-keymap jp-dvorak
 localectl --no-convert set-x11-keymap jp apple dvorak
 
 if [[ ! -f "$repo_dir/kiwi/users.local.xml" ]]; then
-    # Reuse the VM user's existing hash only after the owner's explicit consent.
-    python3 "$repo_dir/scripts/configure-user.py" gaato --from-local-user
+    echo 'Create kiwi/users.local.xml explicitly with scripts/configure-user.py first.' >&2
+    echo 'Only use --from-local-user after the owner consents to password reuse.' >&2
+    exit 1
 fi
 mkdir -p "$repo_dir/.keys"
 if ! curl --fail --location --silent --show-error \

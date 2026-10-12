@@ -61,7 +61,7 @@ class PackagingTests(unittest.TestCase):
             dummy = work / "dummy"
             dummy.write_bytes(b"packaging fixture only; not a bootable binary\n")
             run("mmd", "-i", str(esp), "::/EFI", "::/EFI/BOOT", "::/m1n1")
-            run("mcopy", "-i", str(esp), str(dummy), "::/EFI/BOOT/BOOTAA64.EFI")
+            run("mcopy", "-i", str(esp), str(dummy), "::/EFI/BOOT/bootaa64.efi")
             run("mcopy", "-i", str(esp), str(dummy), "::/m1n1/boot.bin")
             with image.open("r+b") as target:
                 for source, offset in ((esp, 256 * 4096), (root, 16640 * 4096)):
