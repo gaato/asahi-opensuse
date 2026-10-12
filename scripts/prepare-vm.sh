@@ -13,8 +13,8 @@ zypper -n install python3-kiwi python3-base createrepo_c git-core 7zip wget file
 
 # Serial SSH/UTM input already arrives as characters; configure physical input
 # independently and avoid localectl's approximate console/XKB conversion.
-localectl --no-convert set-keymap jp-dvorak
-localectl --no-convert set-x11-keymap jp apple dvorak
+localectl --no-convert set-keymap us-dvorak
+localectl --no-convert set-x11-keymap us apple dvorak
 
 if [[ ! -f "$repo_dir/kiwi/users.local.xml" ]]; then
     echo 'Create kiwi/users.local.xml explicitly with scripts/configure-user.py first.' >&2

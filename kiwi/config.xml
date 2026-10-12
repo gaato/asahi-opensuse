@@ -12,7 +12,7 @@
         <bootsplash-theme>bgrt</bootsplash-theme>
         <bootloader-theme>openSUSE</bootloader-theme>
         <locale>en_US</locale>
-        <keytable>jp-dvorak</keytable>
+        <keytable>us-dvorak</keytable>
 	<timezone>Asia/Tokyo</timezone>
         <rpm-check-signatures>true</rpm-check-signatures>
         <type image="oem" filesystem="btrfs" fsmountoptions="x-systemd.growfs,compress=zstd:1" kernelcmdline="splash=silent quiet security=selinux" firmware="uefi" bootpartition="false" efipartsize="1536" target_blocksize="4096" btrfs_root_is_snapshot="true" btrfs_set_default_volume="true" rootfs_label="tumbleweed">

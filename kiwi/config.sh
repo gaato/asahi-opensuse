@@ -35,13 +35,13 @@ mkdir -p /var/log/journal
 
 systemctl set-default graphical.target
 
-# Use the same JIS Dvorak layout for the greeter and new Plasma sessions.
+# Use standard US Dvorak on the Apple JIS keyboard in all graphical sessions.
 mkdir -p /etc/X11/xorg.conf.d /etc/skel/.config /var/lib/sddm/.config
 cat > /etc/X11/xorg.conf.d/00-keyboard.conf <<EOF
 Section "InputClass"
     Identifier "system-keyboard"
     MatchIsKeyboard "on"
-    Option "XkbLayout" "jp"
+    Option "XkbLayout" "us"
     Option "XkbVariant" "dvorak"
     Option "XkbModel" "apple"
 EndSection
@@ -49,7 +49,7 @@ EOF
 cat > /etc/skel/.config/kxkbrc <<EOF
 [Layout]
 Use=true
-LayoutList=jp
+LayoutList=us
 VariantList=dvorak
 Model=apple
 EOF

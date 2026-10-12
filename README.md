@@ -34,8 +34,8 @@ Good luck :D
 
 This fork uses [home:gaato:asahi](https://build.opensuse.org/project/show/home:gaato:asahi)
 for Asahi packages and keeps `/boot` inside the Btrfs root filesystem so kernel,
-initrd, and modules stay together during Snapper rollback. The image uses Japanese
-Dvorak on an Apple keyboard, the Asia/Tokyo time zone, and an English UI.
+initrd, and modules stay together during Snapper rollback. The image uses standard
+US Dvorak on an Apple JIS keyboard, the Asia/Tokyo time zone, and an English UI.
 
 Build in an **aarch64 openSUSE Tumbleweed VM**. Python 3.11 or newer is required.
 The personalized image contains a login password hash; do not publish it or its logs.
@@ -60,6 +60,13 @@ The personalized image contains a login password hash; do not publish it or its 
    `sh kiwi/make-installer.sh PATH_TO_RAW PRIVATE_OUTPUT_DIRECTORY`.
    The packager checks the sector size, two-partition layout, filesystem types,
    boot artifacts, and ZIP integrity. It also writes a SHA-256 checksum.
+
+For a complete build-and-package run in the dedicated prepared VM, root can run
+`bash scripts/run-build.sh`. It prints a private run directory under `builds/`
+and writes separate build and packaging logs there. The default artifact owner
+is `gaato` (or `SUDO_USER` when launched through sudo). Read progress with
+`python3 scripts/build-status.py RUN_DIRECTORY`; this suppresses credential-related
+log details. A `status` file records completion or failure.
 
 The output layout is:
 
