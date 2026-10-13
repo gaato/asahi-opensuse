@@ -3,6 +3,15 @@
 set -euxo pipefail
 umask 022
 
+# KIWI's merged description contains the private login hash. It is removed
+# during final image cleanup; protect it even in the intermediate build root.
+if [ -d /image ]; then
+    chmod 700 /image
+fi
+for private_metadata in /image/config.xml /.profile; do
+    [ ! -f "$private_metadata" ] || chmod 600 "$private_metadata"
+done
+
 test -f /.kconfig && . /.kconfig
 test -f /.profile && . /.profile
 

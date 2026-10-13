@@ -24,6 +24,14 @@ class RecipeTests(unittest.TestCase):
         self.assertTrue({"libopenh264-8", "gstreamer-plugins-bad"} <= packages)
         self.assertTrue({"libopenh264-7", "gstreamer-plugin-openh264"}.isdisjoint(packages))
 
+    def test_arm64_efi_and_private_metadata(self):
+        tree = ET.parse(ROOT / "kiwi/config.xml")
+        packages = {p.attrib["name"] for p in tree.findall("packages/package")}
+        self.assertIn("grub2-arm64-efi", packages)
+        config = (ROOT / "kiwi/config.sh").read_text()
+        self.assertIn("chmod 700 /image", config)
+        self.assertIn('chmod 600 "$private_metadata"', config)
+
 
 class LogPrivacyTests(unittest.TestCase):
     def test_credentials_are_redacted(self):

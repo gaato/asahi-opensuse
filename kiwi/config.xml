@@ -76,6 +76,7 @@
     <packages type="image" patternType="onlyRequired">
         <package name="sudo-policy-wheel-auth-self"/>
         <package name="grub2-snapper-plugin"/>
+        <package name="grub2-arm64-efi"/>
         <package name="branding-openSUSE"/>
         <package name="squashfs"/>
         <package name="cron"/>
