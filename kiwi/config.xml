@@ -57,6 +57,9 @@
     <package name="suse-module-tools-scriptlets"/>
 	<package name="openSUSE-release"/>
 	<package name="openSUSE-release-dvd"/>
+    <package name="systemd-default-settings-branding-openSUSE"/>
+    <package name="systemd-presets-branding-openSUSE"/>
+    <package name="tar"/>
     </packages>
     <packages type="image" patternType="plusRecommended">
         <ignore name="patterns-base-x11"/>
