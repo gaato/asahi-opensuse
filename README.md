@@ -109,6 +109,20 @@ services, speaker safety and audio configuration. It also compares ZIP root and
 ESP bytes against the audited raw image. It unmounts and detaches its own loop
 device afterwards. This static audit is not a hardware boot or speaker test.
 
+After completing the official installer's Recovery step and logging in to Plasma
+on the physical M1 MacBook Air, run `python3 scripts/check-first-boot.py` as the
+desktop user. Optional `--root-uuid` and `--efi-uuid` arguments compare mounted
+filesystems against the audited image. This read-only helper does not install
+packages, change settings, open SSH access, print network identifiers, or play
+audio. Review each result; a running Plasma process is not proof of correct
+rendering, and a connected NetworkManager state is not proof of Internet access.
+Check the visible desktop, JIS/Dvorak punctuation, and a real network connection
+separately. Before speaker playback, inspect the safety daemon logs and verify
+the proper Asahi DSP route; an active daemon alone is insufficient. Follow the
+[Asahi audio stack documentation](https://asahilinux.org/docs/sw/audio-userspace/),
+and do not bypass the kernel speaker interlock or drive speakers directly with
+ALSA test tones.
+
 The optional Kamoso camera application is not preinstalled: its current package
 requires `gstreamer-plugins-good-qtqml6`, which openSUSE disables on aarch64 because
 of its GLES configuration. This does not remove Plasma or the camera kernel
