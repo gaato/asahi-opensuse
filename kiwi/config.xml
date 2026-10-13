@@ -75,6 +75,7 @@
         <package name="patterns-base-selinux"/>
     </packages>
     <packages type="image" patternType="onlyRequired">
+        <package name="grub2-arm64-efi"/>
         <package name="systemd-boot"/>
 		<package name="sdbootutil"/>
         <package name="branding-openSUSE"/>
