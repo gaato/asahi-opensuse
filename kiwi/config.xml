@@ -100,7 +100,7 @@
 	<package name="plymouth-theme-bgrt"/>
         <package name="plymouth-theme-spinner"/>
 	<package name="systemd-firstboot"/>
-	<package name="systemd-network"/>
+	<package name="systemd-networkd"/>
 	<package name="systemd-default-settings-branding-openSUSE"/>
 	<package name="systemd-presets-branding-openSUSE"/>
 	<package name="fastfetch"/>
@@ -115,7 +115,7 @@
     <packages type="image" patternType="onlyRequired"> 
         <package name="kernel-asahi"/>
         <package name="dtb-apple"/>
-        <package name="uboot-asahi"/>
+        <package name="u-boot-asahi"/>
         <package name="asahi-bless"/>
 	<package name="asahi-btsync"/>
 	<package name="asahi-nvram"/>
@@ -130,7 +130,7 @@
         <package name="Mesa-dri"/>
         <package name="Mesa-dri-asahi"/>
 		<package name="Mesa-libRusticlOpenCL"/>
-		<package name="Mesa-lib-vulkan-device-select"/>
+		<package name="Mesa-vulkan-device-select"/>
 	<package name="lv2-lsp-plugins"/>
 	<package name="bankstown-lv2"/>
 	<package name="triforce-lv2"/>
