@@ -90,6 +90,12 @@ filesystems, not block devices; its dummy EFI binaries test packaging, not booti
 Actual Apple Silicon boot, graphics, audio, firmware extraction, and keyboard
 behavior still require verification on the target Mac.
 
+The optional Kamoso camera application is not preinstalled: its current package
+requires `gstreamer-plugins-good-qtqml6`, which openSUSE disables on aarch64 because
+of its GLES configuration. This does not remove Plasma or the camera kernel
+driver. OpenH264 uses `libopenh264-8` and the plugin now shipped in
+`gstreamer-plugins-bad`, not the obsolete standalone plugin package.
+
 ## Big thanks to the following:
 - ivabus - for the initial configs
 - Fedora Asahi SIG Team - basis of some specs

@@ -55,6 +55,10 @@
     <package name="suse-module-tools-scriptlets"/>
 	<package name="openSUSE-release"/>
 	<package name="openSUSE-release-dvd"/>
+    <!-- Pick the intended providers before dependency-only bootstrap choices. -->
+    <package name="systemd-default-settings-branding-openSUSE"/>
+    <package name="systemd-presets-branding-openSUSE"/>
+    <package name="tar"/>
     </packages>
     <packages type="image" patternType="plusRecommended">
         <ignore name="patterns-base-x11"/>
@@ -148,7 +152,7 @@
 	<package name="sddm-qt6-branding-openSUSE"/>
 	<package name="hicolor-icon-theme-branding-openSUSE"/>
 	<package name="libopenh264-8"/>
-	<package name="gstreamer-plugin-openh264"/>
+	<package name="gstreamer-plugins-bad"/>
 	<package name="konsole"/>
 	<package name="gwenview"/>
 	<package name="ark"/>
@@ -162,7 +166,7 @@
 	<package name="kate"/>
 	<package name="skanlite"/>
 	<package name="avahi"/>
-	<package name="kamoso"/>
+    <!-- Kamoso requires qtqml6, disabled upstream on aarch64 (GLES build). -->
 	<package name="google-roboto-fonts"/>
 	<package name="google-roboto-mono-fonts"/>
 	<package name="google-roboto-slab-fonts"/>
