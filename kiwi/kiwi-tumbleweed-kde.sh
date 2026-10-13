@@ -29,7 +29,17 @@ if [ ! -d "$build_parent" ] || [ "$(stat -c %a -- "$build_parent")" != 700 ]; th
     echo 'The target parent directory must already exist with mode 0700.' >&2
     exit 1
 fi
-if [ -e "$target_dir" ]; then
+resume_option=
+if [ "${3-}" = --resume ]; then
+    [ -d "$target_dir/build/image-root" ] || {
+        echo 'Resume requires a previously prepared KIWI root.' >&2
+        exit 1
+    }
+    resume_option=--allow-existing-root
+elif [ -n "${3-}" ]; then
+    echo 'Unknown build option.' >&2
+    exit 1
+elif [ -e "$target_dir" ]; then
     echo "Target already exists: $target_dir. Choose a new directory." >&2
     exit 1
 fi
@@ -41,4 +51,4 @@ fi
 
 sudo kiwi-ng --debug --type=oem --profile=Tumbleweed-KDE --color-output \
     system build --description "$description_dir" --target-dir "$target_dir" \
-    --signing-key="$signing_key"
+    --signing-key="$signing_key" ${resume_option:+$resume_option}

@@ -68,6 +68,12 @@ is `gaato` (or `SUDO_USER` when launched through sudo). Read progress with
 `python3 scripts/build-status.py RUN_DIRECTORY`; this suppresses credential-related
 log details. A `status` file records completion or failure.
 
+After a preparation failure caused only by `config.sh`, root may explicitly run
+`bash scripts/run-build.sh --resume PRIVATE_RUN_DIRECTORY`. This retains the
+failed logs in a private subdirectory and uses KIWI's `--allow-existing-root`.
+Do this only when the XML, profile, and disk layout are unchanged; otherwise use
+a fresh run. Runs with an existing raw image or installer are not resumed.
+
 The output layout is:
 
 ```text

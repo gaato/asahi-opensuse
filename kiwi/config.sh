@@ -28,7 +28,9 @@ passwd -l root
 #--------------------------------------
 systemctl enable NetworkManager.service
 systemctl enable chronyd.service
-systemctl enable sddm.service
+# The openSUSE presets already claim this alias for display-manager-legacy.
+# This image deliberately uses SDDM directly, including its Wayland greeter.
+systemctl enable --force sddm.service
 systemctl enable speakersafetyd.service
 
 mkdir -p /var/log/journal
