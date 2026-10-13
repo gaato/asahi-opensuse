@@ -99,6 +99,16 @@ filesystems, not block devices; its dummy EFI binaries test packaging, not booti
 Actual Apple Silicon boot, graphics, audio, firmware extraction, and keyboard
 behavior still require verification on the target Mac.
 
+Before replacing any existing installation, root can run
+`python3 scripts/audit-image.py PATH_TO_RAW PRIVATE_OUTPUT_DIRECTORY kiwi/users.local.xml`
+in the native build VM. This opens only a regular image file with a read-only
+4096-byte loop device and mounts Btrfs without log replay. It checks actual EFI
+binaries, filesystem UUIDs and GRUB, kernel/DTB versions, initrd firmware hooks,
+SELinux, private credential equality without displaying hashes, Dvorak, desktop
+services, speaker safety and audio configuration. It also compares ZIP root and
+ESP bytes against the audited raw image. It unmounts and detaches its own loop
+device afterwards. This static audit is not a hardware boot or speaker test.
+
 The optional Kamoso camera application is not preinstalled: its current package
 requires `gstreamer-plugins-good-qtqml6`, which openSUSE disables on aarch64 because
 of its GLES configuration. This does not remove Plasma or the camera kernel
