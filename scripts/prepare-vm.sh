@@ -11,6 +11,10 @@ repo_dir=$(cd -- "$(dirname -- "$0")/.." && pwd)
 zypper -n install python3-kiwi python3-base createrepo_c git-core 7zip wget file \
     util-linux dosfstools btrfsprogs e2fsprogs gptfdisk qemu-tools curl gpg2
 
+# An enforcing build host must recognize the target's additional context types.
+# These are official modules, not a switch to permissive/disabled SELinux.
+zypper -n install --no-recommends flatpak-selinux container-selinux
+
 # Serial SSH/UTM input already arrives as characters; configure physical input
 # independently and avoid localectl's approximate console/XKB conversion.
 localectl --no-convert set-keymap us-dvorak

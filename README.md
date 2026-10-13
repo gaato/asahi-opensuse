@@ -48,6 +48,9 @@ The personalized image contains a login password hash; do not publish it or its 
 2. In the dedicated build VM, run `sudo bash scripts/prepare-vm.sh`. This installs
    the build tools and fetches the OBS signing key. The private user include must
    already exist; this step never copies a password hash automatically.
+   An enforcing builder also needs the official `flatpak-selinux` and
+   `container-selinux` policy packages, installed by this step. They let the build
+   host recognize context types used by the desktop image; SELinux stays enforcing.
 3. Wait until the required packages in `home:gaato:asahi/openSUSE_Factory_ARM`
    are built and published, including `kernel-asahi`, `dtb-apple`, `m1n1`, and
    `u-boot-asahi`. Do not mix a partial publication with a different kernel/DTB repo.
