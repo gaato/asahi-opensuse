@@ -43,12 +43,10 @@ popd > /dev/null
 # build package
 mkdir -p "${workdir}/package/esp"
 7z x -o"${workdir}/package/esp" "${workdir}/${imagename}1"
-mv "${workdir}/${imagename}2" "${workdir}/package/boot.img"
-mv "${workdir}/${imagename}3" "${workdir}/package/root.img"
+mv "${workdir}/${imagename}2" "${workdir}/package/root.img"
 
 esp_volume_id="$(file "${workdir}/${imagename}1" | awk -v 'RS=,' '/serial number/ { print $3 }')"
 esp_size="$(stat -c %s "${workdir}/${imagename}1")"
-boot_size="$(stat -c %s "${workdir}/package/boot.img")"
 root_size="$(stat -c %s "${workdir}/package/root.img")"
 
 pushd "${workdir}/package" > /dev/null
@@ -76,12 +74,6 @@ cat > installer_data-$package.json <<EOF
                     "copy_firmware": true,
                     "copy_installer_data": true,
                     "source": "esp"
-                },
-                {
-                    "name": "Boot",
-                    "type": "Linux",
-                    "size": "${boot_size}B",
-                    "image": "boot.img"
                 },
                 {
                     "name": "Root",
